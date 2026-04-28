@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propuesta - duki</title>
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="bndk.png" alt="duki" class="logo" />
+      <h1>Propuesta técnica</h1>
+      <div class="badge"><strong>duki</strong> sistema de socios + consumo + wallet + precios dinámicos</div>
+    </header>
+
+    <div class="card">
+      <h2>Resumen</h2>
+      <p>
+        Propuesta para implementar un portal interno que permita identificar socios mediante NFC,
+        aplicar menús y precios por categoría, realizar cobros/recargas y mantener historial.
+        Se propone iniciar con un MVP mínimo (flujo simple y rápido) y escalar por fases.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Alcance funcional (MVP)</h2>
+      <ul>
+        <li>Socios: alta/edición, categoría, estado (activo/bloqueado), credenciales (PIN), liga con NFC (UID cuando aplique).</li>
+        <li>Catálogo: productos (bebidas/alimentos) y disponibilidad por categoría.</li>
+        <li>Precios dinámicos: descuento por categoría + reglas para promociones futuras.</li>
+        <li>Wallet: saldo recargable y gastable (recargas y consumos).</li>
+        <li>Cobros: efectivo / tarjeta / transferencia / wallet.</li>
+        <li>Multi-ubicación: 2 sucursales + centro de entrenamiento como ubicación de consumo.</li>
+        <li>Seguridad: login para staff, control de acceso por roles, auditoría (quién hizo qué y dónde).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Flujos principales</h2>
+      <ul>
+        <li>Identificar socio: escaneo NFC → login del socio (PIN) → vista del socio.</li>
+        <li>Recarga: identificar socio → monto → método → confirmación → saldo actualizado.</li>
+        <li>Consumo: identificar socio → menú filtrado → precio final aplicado → cobro → historial.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>NFC: estrategia y seguridad</h2>
+      <p>
+        NFC se considera un identificador / disparador de flujo. La protección de datos se realiza
+        mediante credenciales del socio (PIN) y permisos del staff.
+      </p>
+      <ul>
+        <li>V1: escaneo NFC abre el login; el PIN controla el acceso.</li>
+        <li>Fase de hardening: evitar “links compartidos” mediante token temporal (10 min) / one-time, requiere backend mínimo.</li>
+        <li>Nota: un enlace NDEF puede ser copiado; la mitigación real necesita validación en servidor o aplicación.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Arquitectura propuesta por fases</h2>
+      <ul>
+        <li><strong>Fase 0 (demo)</strong>: mock sin backend para validar flujo y UX.</li>
+        <li><strong>Fase 1 (MVP)</strong>: backend + base de datos (SQLite o Postgres) para operar wallet, recargas y ventas con auditoría.</li>
+        <li><strong>Fase 2 (hardening)</strong>: tokens temporales, rate-limit de intentos, auditoría avanzada, backups automatizados.</li>
+        <li><strong>Fase 3</strong>: reportes, promociones avanzadas, mejoras de operación multi-ubicación y roles finos.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Recomendación de implementación (MVP real)</h2>
+      <ul>
+        <li>Frontend: web app (tablet/PC) para staff + vistas para socio si aplica.</li>
+        <li>Backend: API modular (monolito modular) para mantener simple y escalable.</li>
+        <li>Datos: wallet con ledger (transacciones) para evitar inconsistencias.</li>
+        <li>Despliegue: un entorno central (o por sucursal) según conectividad y operación.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Demo entregable</h2>
+      <ul>
+        <li><a href="demo.html">demo.html</a> (staff simula escaneo del UID y abre login)</li>
+        <li><a href="demo2.html">demo2.html</a> (socio escanea etiqueta del mesero; incluye bloqueo simulado por token temporal)</li>
+      </ul>
+    </div>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>duki demo</title>
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="bndk.png" alt="duki" class="logo" />
+      <h1>Demo interna</h1>
+      <div class="badge"><strong>duki</strong> staff / mock</div>
+    </header>
+
+    <div class="card" id="scanCard">
+      <h2>Escaneo NFC (simulado)</h2>
+      <p>En el MVP real esto viene del lector NFC. En este demo, escribe el UID.</p>
+      <form id="scanForm">
+        <label>
+          UID
+          <input id="uidInput" name="uid" autocomplete="off" placeholder="Ej. 04A224B19C" />
+        </label>
+        <button type="submit">Continuar</button>
+      </form>
+    </div>
+
+    <div class="card" id="loginCard" hidden>
+      <h2>Login del socio</h2>
+      <p id="loginHint">Ingresa el PIN del socio para ver su portal.</p>
+      <form id="loginForm">
+        <label>
+          PIN
+          <input id="pinInput" name="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••" />
+        </label>
+        <button type="submit">Ingresar</button>
+      </form>
+      <p id="loginError" style="display:none;"></p>
+    </div>
+
+    <div class="card" id="memberCard" hidden>
+      <h2>Vista del socio</h2>
+      <p id="memberMeta"></p>
+      <hr />
+      <h2>Menú aplicable</h2>
+      <div id="menu"></div>
+      <hr />
+      <h2>Acciones (demo)</h2>
+      <form id="topupForm">
+        <label>
+          Recarga (MXN)
+          <input id="topupAmount" inputmode="decimal" autocomplete="off" placeholder="200" />
+        </label>
+        <button type="submit">Aplicar recarga</button>
+      </form>
+      <p id="topupMsg" style="display:none;"></p>
+    </div>
+
+  </main>
+
+  <script src="demo.js"></script>
+</body>
+</html>

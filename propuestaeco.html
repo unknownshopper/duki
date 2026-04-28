@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propuesta Económica - duki</title>
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="bndk.png" alt="duki" class="logo" />
+      <h1>Propuesta económica</h1>
+      <div class="badge"><strong>duki</strong> fases, entregables y costos</div>
+    </header>
+
+    <div class="card">
+      <h2>Nota</h2>
+      <p>
+        Los montos son una guía para definir alcance. El costo final depende de: número de ubicaciones activas,
+        número de usuarios staff, reglas de precios/promociones, y nivel de hardening requerido.
+      </p>
+      <p>
+        Si prefieres, puedo convertir esto a una tabla cerrada en cuanto me confirmes alcance exacto (MVP) y fecha objetivo.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Fase 0 — Demo (1-2 días)</h2>
+      <ul>
+        <li>Objetivo: validar flujo NFC → login → vista de socio y UX “menos clicks”.</li>
+        <li>Entregables: demos navegables + brief/propuesta.</li>
+        <li>Costo: $0 (demo actual) / o fijo simbólico si se formaliza el ejercicio.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Fase 1 — MVP operativo (2-4 semanas)</h2>
+      <ul>
+        <li>Socios/categorías, catálogo, menús por categoría.</li>
+        <li>Precios dinámicos (descuento por categoría) + base para promociones.</li>
+        <li>Wallet: recargas + consumos + historial.</li>
+        <li>Cobros: efectivo/tarjeta/transferencia/wallet.</li>
+        <li>Multi-ubicación (2 sucursales + entrenamiento).</li>
+        <li>Usuarios staff + roles + auditoría básica.</li>
+      </ul>
+      <p><strong>Rango estimado:</strong> $35,000 – $85,000 MXN</p>
+    </div>
+
+    <div class="card">
+      <h2>Fase 2 — Seguridad y robustez (1-2 semanas)</h2>
+      <ul>
+        <li>Token temporal / one-time para mitigar enlaces compartidos.</li>
+        <li>Rate-limit de intentos de PIN.</li>
+        <li>Backups automatizados y bitácora avanzada.</li>
+        <li>Mejoras UX para operación (barra/caja) y performance.</li>
+      </ul>
+      <p><strong>Rango estimado:</strong> $15,000 – $45,000 MXN</p>
+    </div>
+
+    <div class="card">
+      <h2>Fase 3 — Reportes y promociones avanzadas (2-4 semanas)</h2>
+      <ul>
+        <li>Reportes por ubicación/categoría/producto (ventas, recargas, consumo).</li>
+        <li>Promos configurables (happy hour, combos, reglas por horario).</li>
+        <li>Historial detallado del socio (preferencias, frecuencia).</li>
+      </ul>
+      <p><strong>Rango estimado:</strong> $25,000 – $70,000 MXN</p>
+    </div>
+
+    <div class="card">
+      <h2>Opcionales</h2>
+      <ul>
+        <li>Diseño UI más avanzado / branding completo: $8,000 – $25,000 MXN</li>
+        <li>Soporte y mantenimiento mensual: $3,000 – $12,000 MXN</li>
+        <li>Implementación en sitio (capacitación staff): $2,000 – $10,000 MXN</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Supuestos</h2>
+      <ul>
+        <li>El demo no es un sistema productivo: no incluye persistencia real ni validación server-side.</li>
+        <li>Para operar wallet/cobros se requiere backend y almacenamiento confiable.</li>
+        <li>Las integraciones de pago (terminal/banco) no están incluidas; se modela registro de pago.</li>
+      </ul>
+    </div>
+
+  </main>
+</body>
+</html>

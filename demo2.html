@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>duki demo2</title>
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="bndk.png" alt="duki" class="logo" />
+      <h1>Demo interna (socio)</h1>
+      <div class="badge"><strong>duki</strong> escaneo NFC del mesero → login</div>
+    </header>
+
+    <div class="card" id="notAvailable" hidden>
+      <h2>No disponible</h2>
+      <p>
+        Este enlace solo está disponible por un momento después de un escaneo NFC.
+        Vuelve a escanear la etiqueta.
+      </p>
+      <hr />
+      <p id="naDetails"></p>
+    </div>
+
+    <div class="card" id="stationCard" hidden>
+      <h2>Contexto</h2>
+      <p id="stationMeta"></p>
+      <p>
+        Escanea la etiqueta del mesero para abrir este portal. Luego el socio inicia sesión
+        con sus credenciales.
+      </p>
+    </div>
+
+    <div class="card" id="loginCard" hidden>
+      <h2>Login del socio</h2>
+      <p>Ingresa tu teléfono (o número de socio) y tu PIN.</p>
+      <form id="loginForm">
+        <label>
+          Teléfono / Número de socio
+          <input id="idInput" name="id" autocomplete="off" placeholder="Ej. 5512345678" />
+        </label>
+        <label>
+          PIN
+          <input id="pinInput" name="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••" />
+        </label>
+        <button type="submit">Ingresar</button>
+      </form>
+      <p id="loginError" style="display:none;"></p>
+    </div>
+
+    <div class="card" id="memberCard" hidden>
+      <h2>Vista del socio</h2>
+      <p id="memberMeta"></p>
+      <hr />
+      <h2>Menú aplicable</h2>
+      <div id="menu"></div>
+      <hr />
+      <h2>Acciones (demo)</h2>
+      <form id="topupForm">
+        <label>
+          Recarga (MXN)
+          <input id="topupAmount" inputmode="decimal" autocomplete="off" placeholder="200" />
+        </label>
+        <button type="submit">Aplicar recarga</button>
+      </form>
+      <button id="logoutBtn" type="button">Cerrar sesión</button>
+      <p id="topupMsg" style="display:none;"></p>
+    </div>
+
+  </main>
+
+  <script src="demo2.js"></script>
+</body>
+</html>
