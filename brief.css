@@ -93,6 +93,14 @@ h2 {
   color: rgba(17, 24, 39, 0.86);
 }
 
+h3 {
+  margin: 14px 0 8px;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.88);
+}
+
 p {
   margin: 0 0 12px;
   color: var(--muted);

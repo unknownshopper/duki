@@ -18,10 +18,13 @@ const db = {
     },
   ],
   products: [
-    { id: "p_001", name: "Agua", basePrice: 25, categories: ["general", "vip"] },
-    { id: "p_002", name: "Cerveza", basePrice: 80, categories: ["general", "vip"] },
-    { id: "p_003", name: "Energético", basePrice: 95, categories: ["vip"] },
-    { id: "p_004", name: "Hamburguesa", basePrice: 160, categories: ["general", "vip"] },
+    { id: "a_001", name: "Natural", basePrice: 800, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "a_002", name: "Energético", basePrice: 1400, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "a_003", name: "Relajación", basePrice: 1600, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "a_004", name: "Estimulante", basePrice: 1800, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "b_001", name: "Salud", basePrice: 300, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "b_002", name: "Dinero", basePrice: 300, categories: ["general", "vip", "ahijado", "colaborador"] },
+    { id: "b_003", name: "Amor", basePrice: 300, categories: ["general", "vip", "ahijado", "colaborador"] },
   ],
   categoryDiscountPct: {
     general: 0,
@@ -78,16 +81,26 @@ function renderMember() {
   menu.innerHTML = "";
 
   const allowed = db.products.filter((p) => p.categories.includes(m.category));
-  const ul = document.createElement("ul");
+  const foods = allowed.filter((p) => p.id.startsWith("a_"));
+  const drinks = allowed.filter((p) => p.id.startsWith("b_"));
 
-  for (const p of allowed) {
-    const li = document.createElement("li");
-    const finalPrice = computePrice(p, m.category);
-    li.textContent = `${p.name} — ${money(finalPrice)} (base ${money(p.basePrice)})`;
-    ul.appendChild(li);
+  function renderSection(title, items) {
+    const h = document.createElement("h3");
+    h.textContent = title;
+    menu.appendChild(h);
+
+    const ul = document.createElement("ul");
+    for (const p of items) {
+      const li = document.createElement("li");
+      const finalPrice = computePrice(p, m.category);
+      li.textContent = `${p.name} — ${money(finalPrice)} (base ${money(p.basePrice)})`;
+      ul.appendChild(li);
+    }
+    menu.appendChild(ul);
   }
 
-  menu.appendChild(ul);
+  renderSection("Alimentos", foods);
+  renderSection("Bebidas", drinks);
 }
 
 function boot() {

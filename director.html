@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>duki — Panel del director</title>
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="bndk.png" alt="duki" class="logo" />
+      <h1>Panel del director</h1>
+      <div class="badge"><strong>duki</strong> ventas en vivo + reportes</div>
+    </header>
+
+    <div class="card" id="kpiCard">
+      <h2>Ventas al momento (simulado)</h2>
+      <p id="kpis"></p>
+      <hr />
+      <p id="breakdown"></p>
+    </div>
+
+    <div class="card">
+      <h2>Filtros</h2>
+      <form id="filtersForm">
+        <label>
+          Periodo
+          <select id="rangeSelect">
+            <option value="today">Hoy</option>
+            <option value="week" selected>Últimos 7 días</option>
+            <option value="month">Últimos 30 días</option>
+          </select>
+        </label>
+        <label>
+          Ubicación
+          <select id="locationSelect">
+            <option value="all" selected>Todas</option>
+            <option value="sucursal_1">Sucursal 1</option>
+            <option value="sucursal_2">Sucursal 2</option>
+            <option value="entrenamiento">Entrenamiento</option>
+          </select>
+        </label>
+        <button type="submit">Aplicar</button>
+      </form>
+      <p>Nota: este panel es demo con datos mock. En producción se conecta a backend + base de datos.</p>
+    </div>
+
+    <div class="card">
+      <h2>Reporte por día</h2>
+      <div id="dailyReport"></div>
+    </div>
+
+    <div class="card">
+      <h2>Últimas ventas</h2>
+      <div id="liveFeed"></div>
+    </div>
+
+  </main>
+
+  <script src="director.js"></script>
+</body>
+</html>
