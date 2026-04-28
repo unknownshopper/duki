@@ -1,10 +1,23 @@
 const db = {
   locations: [
-    { id: "sucursal_1", name: "Sucursal 1" },
-    { id: "sucursal_2", name: "Sucursal 2" },
-    { id: "entrenamiento", name: "Entrenamiento" },
+    { id: "sucursal_1", name: "Lapetro" },
+    { id: "sucursal_2", name: "Atasta" },
+    { id: "entretenimiento", name: "Entretenimiento" },
   ],
   payments: ["efectivo", "tarjeta", "transferencia", "wallet"],
+  members: [
+    { id: "m_001", name: "Francisco Fernández", category: "vip" },
+    { id: "m_002", name: "Sofía Hernández", category: "general" },
+  ],
+  products: [
+    { id: "a_001", name: "Natural", basePrice: 800 },
+    { id: "a_002", name: "Energético", basePrice: 1400 },
+    { id: "a_003", name: "Relajación", basePrice: 1600 },
+    { id: "a_004", name: "Estimulante", basePrice: 1800 },
+    { id: "b_001", name: "Salud", basePrice: 300 },
+    { id: "b_002", name: "Dinero", basePrice: 300 },
+    { id: "b_003", name: "Amor", basePrice: 300 },
+  ],
   sales: [],
 };
 
@@ -52,9 +65,13 @@ function seedMockSales() {
     when.setDate(now.getDate() - dayOffset);
     when.setHours(randInt(10, 23), randInt(0, 59), randInt(0, 59), 0);
 
-    const locationId = pick(db.locations).id;
+    const sellingLocations = db.locations.filter((l) => l.id !== "entretenimiento");
+    const locationId = pick(sellingLocations).id;
     const method = pick(db.payments);
-    const amount = randInt(60, 850);
+    const member = pick(db.members);
+    const product = pick(db.products);
+    const qty = randInt(1, 3);
+    const amount = product.basePrice * qty;
 
     db.sales.push({
       id: `sale_${i}`,
@@ -63,6 +80,10 @@ function seedMockSales() {
       locationId,
       method,
       amount,
+      memberId: member.id,
+      memberName: member.name,
+      item: product.name,
+      qty,
     });
   }
 
@@ -71,9 +92,13 @@ function seedMockSales() {
 
 function addLiveSale() {
   const now = new Date();
-  const locationId = pick(db.locations).id;
+  const sellingLocations = db.locations.filter((l) => l.id !== "entretenimiento");
+  const locationId = pick(sellingLocations).id;
   const method = pick(db.payments);
-  const amount = randInt(45, 520);
+  const member = pick(db.members);
+  const product = pick(db.products);
+  const qty = randInt(1, 2);
+  const amount = product.basePrice * qty;
 
   db.sales.unshift({
     id: `live_${Math.random().toString(16).slice(2)}`,
@@ -82,6 +107,10 @@ function addLiveSale() {
     locationId,
     method,
     amount,
+    memberId: member.id,
+    memberName: member.name,
+    item: product.name,
+    qty,
   });
 }
 
@@ -149,13 +178,10 @@ function renderKpis(sales) {
 
   const locName = (id) => db.locations.find((l) => l.id === id)?.name ?? id;
 
-  const methodLine = methods
-    .map((m) => `${m.method}: ${money(m.total)}`)
-    .join(" — ");
+  const methodLines = methods.map((m) => `${m.method}: ${money(m.total)}`).join("\n");
+  const locLines = locs.map((l) => `${locName(l.loc)}: ${money(l.total)}`).join("\n");
 
-  const locLine = locs.map((l) => `${locName(l.loc)}: ${money(l.total)}`).join(" — ");
-
-  qs("#breakdown").textContent = `${methodLine}\n${locLine}`;
+  qs("#breakdown").textContent = `Métodos de pago\n${methodLines}\n\nUbicaciones\n${locLines}`;
 }
 
 function renderDailyReport(sales) {
@@ -165,13 +191,33 @@ function renderDailyReport(sales) {
       date,
       total: sum(rows.map((r) => r.amount)),
       count: rows.length,
+      byLoc: groupBy(rows, (r) => r.locationId),
+      byItem: groupBy(rows, (r) => r.item),
     }))
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 
   const ul = document.createElement("ul");
   for (const d of days) {
     const li = document.createElement("li");
-    li.textContent = `${d.date} — ${money(d.total)} (${d.count} tickets)`;
+    const locName = (id) => db.locations.find((l) => l.id === id)?.name ?? id;
+    const locLines = Array.from(d.byLoc.entries())
+      .map(([loc, rows]) => ({ loc, total: sum(rows.map((r) => r.amount)) }))
+      .sort((a, b) => b.total - a.total)
+      .map((x) => `${locName(x.loc)}: ${money(x.total)}`)
+      .join("\n");
+
+    const topItems = Array.from(d.byItem.entries())
+      .map(([item, rows]) => ({
+        item,
+        qty: sum(rows.map((r) => r.qty ?? 1)),
+        total: sum(rows.map((r) => r.amount)),
+      }))
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 3)
+      .map((x) => `${x.item} x${x.qty}`)
+      .join("\n");
+
+    li.textContent = `${d.date}\n${money(d.total)} (${d.count} tickets)\n\n${locLines}\n\n${topItems}`;
     ul.appendChild(li);
   }
 
@@ -186,7 +232,9 @@ function renderLiveFeed(sales) {
   const ul = document.createElement("ul");
   for (const s of sales.slice(0, 12)) {
     const li = document.createElement("li");
-    li.textContent = `${fmtTime(s.at)} — ${locName(s.locationId)} — ${money(s.amount)} — ${s.method}`;
+    const itemLabel = s.qty && s.qty > 1 ? `${s.item} x${s.qty}` : `${s.item}`;
+    const memberLabel = s.memberName ? ` — ${s.memberName}` : "";
+    li.textContent = `${itemLabel}${memberLabel} — ${fmtTime(s.at)} — ${locName(s.locationId)} — ${money(s.amount)} — ${s.method}`;
     ul.appendChild(li);
   }
 
@@ -209,16 +257,33 @@ function boot() {
   seedMockSales();
   renderAll();
 
+  let liveInterval = null;
+
+  function setLive(on) {
+    const btn = qs("#toggleLiveBtn");
+    if (on) {
+      if (liveInterval) return;
+      btn.textContent = "Detener simulación";
+      liveInterval = setInterval(() => {
+        addLiveSale();
+        renderAll();
+      }, 5000);
+    } else {
+      if (!liveInterval) return;
+      clearInterval(liveInterval);
+      liveInterval = null;
+      btn.textContent = "Iniciar simulación";
+    }
+  }
+
   qs("#filtersForm").addEventListener("submit", (e) => {
     e.preventDefault();
     renderAll();
   });
 
-  // Ventas en vivo (simulado)
-  setInterval(() => {
-    addLiveSale();
-    renderAll();
-  }, 5000);
+  qs("#toggleLiveBtn").addEventListener("click", () => {
+    setLive(!liveInterval);
+  });
 }
 
 boot();

@@ -6,7 +6,7 @@
   <title>duki — Panel del director</title>
   <link rel="stylesheet" href="brief.css" />
 </head>
-<body>
+<body class="dashboard">
   <main>
     <header>
       <img src="bndk.png" alt="duki" class="logo" />
@@ -16,9 +16,10 @@
 
     <div class="card" id="kpiCard">
       <h2>Ventas al momento (simulado)</h2>
-      <p id="kpis"></p>
+      <p id="kpis" class="led"></p>
       <hr />
       <p id="breakdown"></p>
+      <button id="toggleLiveBtn" type="button">Iniciar simulación</button>
     </div>
 
     <div class="card">
@@ -36,9 +37,9 @@
           Ubicación
           <select id="locationSelect">
             <option value="all" selected>Todas</option>
-            <option value="sucursal_1">Sucursal 1</option>
-            <option value="sucursal_2">Sucursal 2</option>
-            <option value="entrenamiento">Entrenamiento</option>
+            <option value="sucursal_1">Lapetro</option>
+            <option value="sucursal_2">Atasta</option>
+            <option value="entretenimiento">Entretenimiento</option>
           </select>
         </label>
         <button type="submit">Aplicar</button>

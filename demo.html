@@ -6,7 +6,7 @@
   <title>duki demo</title>
   <link rel="stylesheet" href="brief.css" />
 </head>
-<body>
+<body class="calculator">
   <main>
     <header>
       <img src="bndk.png" alt="duki" class="logo" />
@@ -18,6 +18,13 @@
       <h2>Escaneo NFC (simulado)</h2>
       <p>En el MVP real esto viene del lector NFC. En este demo, escribe el UID.</p>
       <form id="scanForm">
+        <label>
+          Sucursal
+          <select id="locationSelect" name="location">
+            <option value="lapetro" selected>Lapetro (Sucursal 1)</option>
+            <option value="atasta">Atasta (Sucursal 2)</option>
+          </select>
+        </label>
         <label>
           UID
           <input id="uidInput" name="uid" autocomplete="off" placeholder="Ej. 04A224B19C" />

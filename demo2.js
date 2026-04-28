@@ -16,6 +16,26 @@ const db = {
       pin: "4321",
       balance: 120,
     },
+    { id: "m_003", phoneOrNumber: "5510000001", name: "Carlos Méndez", category: "general", pin: "1111", balance: 300 },
+    { id: "m_004", phoneOrNumber: "5510000002", name: "Mariana López", category: "vip", pin: "2222", balance: 1250 },
+    { id: "m_005", phoneOrNumber: "5510000003", name: "Daniela Ruiz", category: "ahijado", pin: "3333", balance: 540 },
+    { id: "m_006", phoneOrNumber: "5510000004", name: "Jorge Castillo", category: "colaborador", pin: "4444", balance: 980 },
+    { id: "m_007", phoneOrNumber: "5510000005", name: "Valeria Soto", category: "general", pin: "5555", balance: 60 },
+    { id: "m_008", phoneOrNumber: "5510000006", name: "Luis Navarro", category: "vip", pin: "6666", balance: 2100 },
+    { id: "m_009", phoneOrNumber: "5510000007", name: "Fernanda Díaz", category: "general", pin: "7777", balance: 430 },
+    { id: "m_010", phoneOrNumber: "5510000008", name: "Iván Romero", category: "ahijado", pin: "8888", balance: 720 },
+    { id: "m_011", phoneOrNumber: "5510000009", name: "Paola Jiménez", category: "vip", pin: "9999", balance: 150 },
+    { id: "m_012", phoneOrNumber: "5510000010", name: "Ricardo Torres", category: "general", pin: "1010", balance: 990 },
+    { id: "m_013", phoneOrNumber: "5510000011", name: "Camila Vargas", category: "colaborador", pin: "1212", balance: 1850 },
+    { id: "m_014", phoneOrNumber: "5510000012", name: "Héctor Luna", category: "general", pin: "1313", balance: 240 },
+    { id: "m_015", phoneOrNumber: "5510000013", name: "Ximena Ríos", category: "vip", pin: "1414", balance: 460 },
+    { id: "m_016", phoneOrNumber: "5510000014", name: "Emilio Herrera", category: "general", pin: "1515", balance: 80 },
+    { id: "m_017", phoneOrNumber: "5510000015", name: "Regina Aguilar", category: "ahijado", pin: "1616", balance: 610 },
+    { id: "m_018", phoneOrNumber: "5510000016", name: "Santiago Flores", category: "vip", pin: "1717", balance: 3050 },
+    { id: "m_019", phoneOrNumber: "5510000017", name: "Andrea Ponce", category: "general", pin: "1818", balance: 355 },
+    { id: "m_020", phoneOrNumber: "5510000018", name: "Diego Morales", category: "colaborador", pin: "1919", balance: 770 },
+    { id: "m_021", phoneOrNumber: "5510000019", name: "Natalia Peña", category: "general", pin: "2020", balance: 510 },
+    { id: "m_022", phoneOrNumber: "5510000020", name: "Óscar Guzmán", category: "vip", pin: "2121", balance: 640 },
   ],
   products: [
     { id: "a_001", name: "Natural", basePrice: 800, categories: ["general", "vip", "ahijado", "colaborador"] },
@@ -120,6 +140,7 @@ function renderMember() {
   const m = state.member;
   const disc = db.categoryDiscountPct[m.category] ?? 0;
   qs("#memberMeta").textContent = `${m.name} — categoría: ${m.category} — saldo: ${money(m.balance)} — descuento: ${disc}%`;
+  qs("#memberBalance").textContent = `SALDO: ${money(m.balance)}`;
 
   const menu = qs("#menu");
   menu.innerHTML = "";
