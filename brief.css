@@ -495,10 +495,22 @@ header {
   margin-bottom: 28px;
 }
 
+header .logo {
+  --logo-size: 84px;
+}
+
+body.calculator header .logo {
+  --logo-size: 140px;
+}
+
+.card a {
+  display: block;
+}
+
 .logo {
   display: block;
-  width: 68px;
-  height: 68px;
+  width: var(--logo-size, 68px);
+  height: var(--logo-size, 68px);
   object-fit: contain;
   border-radius: 16px;
   border: 1px solid rgba(17, 24, 39, 0.12);

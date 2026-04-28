@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>duki</title>
+  <meta name="description" content="Duki — demo de presentación (socio, staff y director)." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="duki" />
+  <meta property="og:description" content="Duki — demo de presentación (socio, staff y director)." />
+  <meta property="og:image" content="bndk.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="duki" />
+  <meta name="twitter:description" content="Duki — demo de presentación (socio, staff y director)." />
+  <meta name="twitter:image" content="bndk.png" />
+
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body class="calculator">
+  <main>
+    <header style="text-align: center;">
+      <img src="bndk.png" alt="duki" class="logo" style="--logo-size: 280px; margin: 0 auto 18px;" />
+      <h1 style="margin-bottom: 12px;">Bienvenido a duki</h1>
+      <div class="badge" style="display: inline-flex;"><strong>duki</strong> demo / presentación</div>
+    </header>
+
+    <div class="card" style="max-width: 520px; margin: 0 auto;">
+      <h2>Login</h2>
+      <form id="loginForm" autocomplete="off">
+        <label>
+          Usuario
+          <input id="userInput" name="user" inputmode="text" autocomplete="off" placeholder="socio: 55... / staff: staff_01 / director" />
+        </label>
+        <label>
+          PIN
+          <input id="pinInput" name="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="••••" />
+        </label>
+        <button type="submit" style="width: 100%;">Login</button>
+      </form>
+      <p id="loginError" style="display:none;"></p>
+    </div>
+  </main>
+
+  <script>
+    const staffUsers = {
+      staff_01: { pin: "1111", to: "demo.html" },
+      staff_02: { pin: "2222", to: "demo.html" },
+    };
+
+    const directorUser = { user: "director", pin: "9999", to: "director.html" };
+
+    function setError(msg) {
+      const el = document.querySelector("#loginError");
+      if (!msg) {
+        el.style.display = "none";
+        el.textContent = "";
+        return;
+      }
+      el.style.display = "block";
+      el.textContent = msg;
+    }
+
+    document.querySelector("#loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      setError("");
+
+      const user = document.querySelector("#userInput").value.trim();
+      const pin = document.querySelector("#pinInput").value.trim();
+
+      if (!user || !pin) {
+        setError("Ingresa usuario y PIN.");
+        return;
+      }
+
+      if (user === directorUser.user && pin === directorUser.pin) {
+        window.location.href = directorUser.to;
+        return;
+      }
+
+      const staff = staffUsers[user];
+      if (staff) {
+        if (pin !== staff.pin) {
+          setError("PIN incorrecto.");
+          return;
+        }
+        window.location.href = staff.to;
+        return;
+      }
+
+      const isMemberId = /^\d{8,15}$/.test(user);
+      if (!isMemberId) {
+        setError("Usuario no reconocido. Usa tu número (socio), staff_01/staff_02 o director.");
+        return;
+      }
+
+      const q = new URLSearchParams({ tap: "1", staff: "mesero_01", station: "station_demo", loc: "sucursal_1" });
+      window.location.href = `demo2.html?${q.toString()}`;
+    });
+  </script>
+</body>
+</html>
